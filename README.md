@@ -4,7 +4,7 @@ This demo project deploys Azure resources and bootstraps Azure DevOps projects t
 
 ## What is End to End Governance?
 
-When developing a governance model for your organization, it is important to remember that Azure Resource Management (ARM) is only _one_ way to manage resources.
+When developing a governance model for your organization, it is important to remember that Azure Resource Manager (ARM) is only _one_ way to manage resources.
 
 [![End to End Governance](./images/e2e-governance-overview.svg)](https://aka.ms/architecture-e2e-governance)
 
@@ -109,7 +109,7 @@ Be aware that in practice per [Cloud Adoption Framework](https://docs.microsoft.
 
 ## Contributing
 
-This demo was created with &hearts; by the FastTrack engineer [Julie Ng](https://github.com/julie-ng) and based on previous experience as an Enterprise Architct and current experieince with Azure customers new to CI/CD and DevOps. After regularly breaking and fixing the demo in onboarding sessions, it was automated.
+This demo was created with &hearts; by the FastTrack engineer [Julie Ng](https://github.com/julie-ng) and based on previous experience as an Enterprise Architect and current experience with Azure customers new to CI/CD and DevOps. After regularly breaking and fixing the demo in onboarding sessions, it was automated.
 
 Learn more about [FastTrack for Azure &rarr;](https://aka.ms/fasttrackforazure)
 

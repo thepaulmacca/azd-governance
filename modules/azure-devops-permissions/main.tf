@@ -56,3 +56,11 @@ resource "azuredevops_group_membership" "admins" {
     azuredevops_group.admins_group
   ]
 }
+
+# External Projects
+
+resource "azuredevops_group" "external_projects" {
+  scope          = var.ado_project_id
+  display_name   = "External Projects"
+  description    = "Members of this group should include project-scoped build identities that require access to the project."
+}

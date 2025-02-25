@@ -10,8 +10,8 @@ variable "name" {
 
 variable "location" {
   type        = string
-  description = "Azure Region for resources. Defaults to Europe West."
-  default     = "westeurope"
+  description = "Azure Region for resources. Defaults to UK South."
+  default     = "uksouth"
 }
 
 variable "devs_group_id" {

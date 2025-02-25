@@ -3,7 +3,7 @@
 # --------------
 
 resource "azurerm_resource_group" "workspace" {
-  name     = "${local.name}-rg"
+  name     = "rg-${local.name}"
   location = var.location
   tags     = var.tags
 }

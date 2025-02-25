@@ -1,10 +1,10 @@
 # Azure DevOps Groups
 # -------------------
-# To add AAD groups to existing project roles:
+# To add Entra ID groups to existing project roles:
 #
 # 1) Create new ADO group
-# 2) Get Reference to existing group, e.g. Contribtors in ADO Project
-# 3) Add ADO group (which references AAD group) to "Contributors" from above
+# 2) Get Reference to existing group, e.g. Contributors in ADO Project
+# 3) Add ADO group (which references Entra ID group) to "Contributors" from above
 
 locals {
   team_role  = "Contributors"

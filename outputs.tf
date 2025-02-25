@@ -1,5 +1,5 @@
 # ---------------
-# Azure AD Groups
+# Entra ID Groups
 # ---------------
 
 output "aad_groups" {
@@ -49,10 +49,6 @@ output "azure_devops_projects" {
 }
 
 # ADO Security Groups
-
-output "azure_devops_service_connections" {
-  value = module.service_connections[*]
-}
 
 output "azure_devops_team_permissions" {
   value = module.ado_team_permissions[*]

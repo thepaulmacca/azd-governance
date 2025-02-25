@@ -1,5 +1,5 @@
 # =================
-#  Azure AD Groups
+#  Entra ID Groups
 # =================
 # Workspaces generally have 2 groups of actors, general
 # team members who are granted "Contributor" permissions
@@ -24,13 +24,13 @@ groups = {
 projects = {
   fruits = {
     name        = "project-fruits"
-    description = "Demo using AAD groups"
+    description = "Demo using Entra ID groups"
     team        = "fruits"
   }
 
   veggies = {
     name        = "project-veggies"
-    description = "Demo using AAD groups"
+    description = "Demo using Entra ID groups"
     team        = "veggies"
   }
 

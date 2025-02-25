@@ -20,7 +20,7 @@ locals {
 }
 
 # =================
-#  Azure AD Groups
+#  Entra ID Groups
 # =================
 
 resource "azuread_group" "groups" {
@@ -53,8 +53,8 @@ module "arm_environments" {
   for_each             = var.environments
   source               = "./modules/azure-resources"
   name                 = "${each.value.team}-${each.value.env}-${local.suffix}"
-  devs_group_id        = azuread_group.groups["${each.value.team}_devs"].id
-  admins_group_id      = azuread_group.groups["${each.value.team}_admins"].id
+  devs_group_id        = azuread_group.groups["${each.value.team}_devs"].object_id
+  admins_group_id      = azuread_group.groups["${each.value.team}_admins"].object_id
   superadmins_group_id = local.superadmins_aad_object_id
   service_principal_id = module.service_principals["${each.value.team}_${each.value.env}"].principal_id
   tags                 = local.tags
@@ -140,8 +140,8 @@ module "ado_team_permissions" {
   for_each       = var.projects
   source         = "./modules/azure-devops-permissions"
   ado_project_id = azuredevops_project.team_projects["${each.value.team}"].id
-  team_aad_id    = azuread_group.groups["${each.value.team}_devs"].id   # Receives 'Contributor' Permissions
-  admin_aad_id   = azuread_group.groups["${each.value.team}_admins"].id # Receives 'Project Administrator' Permissions
+  team_aad_id    = azuread_group.groups["${each.value.team}_devs"].object_id   # Receives 'Contributor' Permissions
+  admin_aad_id   = azuread_group.groups["${each.value.team}_admins"].object_id # Receives 'Project Administrator' Permissions
 
   depends_on = [
     azuread_group.groups,
@@ -155,8 +155,8 @@ module "ado_team_permissions" {
 module "ado_supermarket_permissions_fruits" {
   source         = "./modules/azure-devops-permissions"
   ado_project_id = azuredevops_project.supermarket.id
-  team_aad_id    = azuread_group.groups["fruits_devs"].id   # Receives 'Contributor' Permissions
-  admin_aad_id   = azuread_group.groups["fruits_admins"].id # Receives 'Project Administrator' Permissions
+  team_aad_id    = azuread_group.groups["fruits_devs"].object_id   # Receives 'Contributor' Permissions
+  admin_aad_id   = azuread_group.groups["fruits_admins"].object_id # Receives 'Project Administrator' Permissions
 
   depends_on = [
     azuread_group.groups,
@@ -168,8 +168,8 @@ module "ado_supermarket_permissions_fruits" {
 module "ado_supermarket_permissions_veggies" {
   source         = "./modules/azure-devops-permissions"
   ado_project_id = azuredevops_project.supermarket.id
-  team_aad_id    = azuread_group.groups["veggies_devs"].id   # Receives 'Contributor' Permissions
-  admin_aad_id   = azuread_group.groups["veggies_admins"].id # Receives 'Project Administrator' Permissions
+  team_aad_id    = azuread_group.groups["veggies_devs"].object_id   # Receives 'Contributor' Permissions
+  admin_aad_id   = azuread_group.groups["veggies_admins"].object_id # Receives 'Project Administrator' Permissions
 
   depends_on = [
     azuread_group.groups,
@@ -183,8 +183,8 @@ module "ado_supermarket_permissions_veggies" {
 module "ado_collaboration_permissions_fruits" {
   source         = "./modules/azure-devops-permissions"
   ado_project_id = azuredevops_project.collaboration.id
-  team_aad_id    = azuread_group.groups["fruits_devs"].id   # Receives 'Contributor' Permissions
-  admin_aad_id   = azuread_group.groups["fruits_admins"].id # Receives 'Project Administrator' Permissions
+  team_aad_id    = azuread_group.groups["fruits_devs"].object_id   # Receives 'Contributor' Permissions
+  admin_aad_id   = azuread_group.groups["fruits_admins"].object_id # Receives 'Project Administrator' Permissions
 
   depends_on = [
     azuread_group.groups,
@@ -196,8 +196,8 @@ module "ado_collaboration_permissions_fruits" {
 module "ado_collaboration_permissions_veggies" {
   source         = "./modules/azure-devops-permissions"
   ado_project_id = azuredevops_project.collaboration.id
-  team_aad_id    = azuread_group.groups["veggies_devs"].id   # Receives 'Contributor' Permissions
-  admin_aad_id   = azuread_group.groups["veggies_admins"].id # Receives 'Project Administrator' Permissions
+  team_aad_id    = azuread_group.groups["veggies_devs"].object_id   # Receives 'Contributor' Permissions
+  admin_aad_id   = azuread_group.groups["veggies_admins"].object_id # Receives 'Project Administrator' Permissions
 
   depends_on = [
     azuread_group.groups,
@@ -211,12 +211,10 @@ module "ado_collaboration_permissions_veggies" {
 # =========================
 
 module "service_connections" {
-  for_each                 = module.arm_environments
-  source                   = "./modules/azure-devops-service-connection"
-  service_principal_id     = module.service_principals[each.key].principal_id
-  service_principal_secret = module.service_principals[each.key].client_secret
-  resource_group_name      = "${replace(each.key, "_", "-")}-${local.suffix}-rg"
-  project_id               = azuredevops_project.team_projects[replace(each.key, "/(_dev)|(_prod)|(_shared)/", "")].id
+  for_each            = module.arm_environments
+  source              = "./modules/azure-devops-service-connection"
+  resource_group_name = "${replace(each.key, "_", "-")}-${local.suffix}-rg"
+  project_id          = azuredevops_project.team_projects[replace(each.key, "/(_dev)|(_prod)|(_shared)/", "")].id
 
   depends_on = [
     azuread_group.groups,

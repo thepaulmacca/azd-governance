@@ -1,7 +1,7 @@
-# Superadmins AAD
+# Superadmins Entra ID
 variable "superadmins_aad_object_id" {
   type        = string
-  description = "Object ID of the AAD group for super admins, used to apply key vault access policies, so both humans and super privileged automation service principal can manage Key Vault resources (from outside Terraform). Defaults to object ID of current client."
+  description = "Object ID of the Entra ID group for super admins, used to apply key vault access policies, so both humans and super privileged automation service principal can manage Key Vault resources (from outside Terraform). Defaults to object ID of current client."
   default     = ""
 }
 
@@ -12,7 +12,7 @@ variable "application_owners_ids" {
   default     = []
 }
 
-# AAD Groups
+# Entra ID Groups
 variable "groups" {
   type = map(string)
 }
@@ -31,10 +31,9 @@ variable "default_tags" {
   description = "Tags to apply to Azure Resources"
   type        = map(string)
   default = {
-    public = "true"
-    demo   = "e2e-governance"
-    iac    = "terraform"
-    ci     = "azure-pipelines"
+    demo = "e2e-governance"
+    iac  = "terraform"
+    ci   = "azure-pipelines"
   }
 }
 
